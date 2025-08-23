@@ -23,4 +23,4 @@ A Flutter application for managing and displaying a catalog of products. This ap
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/product_catalog.git
+   git clone https://github.com/megomango/product_catalog.git
