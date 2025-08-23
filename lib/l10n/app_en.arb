@@ -1,0 +1,16 @@
+{
+  "@@locale": "en",
+  "appTitle": "كتالوج المنتجات",
+  "skip": "تخطي",
+  "next": "التالي",
+  "getStarted": "ابدأ",
+  "products": "المنتجات",
+  "price": "السعر",
+  "details": "التفاصيل",
+  "retry": "إعادة المحاولة",
+  "noData": "لا توجد بيانات",
+  "somethingWentWrong": "حدث خطأ ما",
+  "language": "اللغة",
+  "english": "الإنجليزية",
+  "arabic": "العربية"
+}

@@ -1,0 +1,16 @@
+{
+  "@@locale": "ar",
+  "appTitle": "Product Catalog",
+  "skip": "Skip",
+  "next": "Next",
+  "getStarted": "Get Started",
+  "products": "Products",
+  "price": "Price",
+  "details": "Details",
+  "retry": "Retry",
+  "noData": "No data",
+  "somethingWentWrong": "Something went wrong",
+  "language": "Language",
+  "english": "English",
+  "arabic": "Arabic"
+}
