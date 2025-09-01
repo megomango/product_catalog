@@ -1,17 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../data/product_model.dart';
-import '../data/product_repository.dart';
-
-sealed class ProductListState {}
-class ProductListLoading extends ProductListState {}
-class ProductListSuccess extends ProductListState {
-  final List<Product> products;
-  ProductListSuccess(this.products);
-}
-class ProductListError extends ProductListState {
-  final String message;
-  ProductListError(this.message);
-}
+import 'package:product_catalog/features/products/logic/product_list_cubit/product_list_state.dart';
+import '../../data/product_repository.dart';
 
 class ProductListCubit extends Cubit<ProductListState> {
   final ProductRepository repo;

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-
+import 'package:product_catalog/features/products/ui/product_card.dart';
 import '../../../core/di/service_locator.dart';
 import '../../../l10n/app_localizations.dart';
 import '../data/product_repository.dart';
-import '../data/product_model.dart';
-import '../logic/product_list_cubit.dart';
+import '../logic/product_list_cubit/product_list_cubit.dart';
+import '../logic/product_list_cubit/product_list_state.dart';
 
 class ProductListScreen extends StatefulWidget {
+
   const ProductListScreen({super.key});
 
   @override
@@ -59,36 +59,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 childAspectRatio: 0.65,
               ),
               itemCount: data.length,
-              itemBuilder: (context, index) => _ProductCard(product: data[index]),
+              itemBuilder: (context, index) => ProductCard(product: data[index]),
             );
           },
-        ),
-      ),
-    );
-  }
-}
-
-class _ProductCard extends StatelessWidget {
-  const _ProductCard({required this.product});
-  final Product product;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => context.go('/products/details/${product.id}'),
-      child: Card(
-        child: Padding(
-          padding: EdgeInsets.all(8.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(child: Image.network(product.image, fit: BoxFit.contain)),
-              SizedBox(height: 8.h),
-              Text(product.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w600)),
-              SizedBox(height: 4.h),
-              Text('\$${product.price.toStringAsFixed(2)}'),
-            ],
-          ),
         ),
       ),
     );

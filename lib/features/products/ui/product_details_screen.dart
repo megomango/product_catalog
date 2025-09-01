@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/di/service_locator.dart';
-import '../logic/product_details_cubit.dart';
+import '../logic/product_details_cubit/product_details_cubit.dart';
+import '../logic/product_details_cubit/product_details_state.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key, required this.productId});

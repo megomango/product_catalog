@@ -4,38 +4,68 @@ import 'package:go_router/go_router.dart';
 import '../../features/onboarding/ui/onboarding_screen.dart';
 import '../../features/products/ui/product_details_screen.dart';
 import '../../features/products/ui/product_list_screen.dart';
-import '../../features/splash/ui/splash_screen.dart';
 
-final _rootKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+abstract class AppRouter {
+  static final GlobalKey<NavigatorState> navigatorKey =
+  GlobalKey<NavigatorState>(debugLabel: 'root');
 
-final appRouter = GoRouter(
-  navigatorKey: _rootKey,
-  initialLocation: '/',
-  routes: [
-    GoRoute(
-      path: '/',
-      name: 'splash',
-      builder: (context, state) => const SplashScreen(),
-    ),
-    GoRoute(
-      path: '/onboarding',
-      name: 'onboarding',
-      builder: (context, state) => const OnboardingScreen(),
-    ),
-    GoRoute(
-      path: '/products',
-      name: 'products',
-      builder: (context, state) => const ProductListScreen(),
+  static GoRouter? _router;
+
+  static GoRouter getRouter({
+    required bool isNotFirstLogin,
+    required String token,
+  }) {
+    if (_router != null) return _router!;
+
+    _router = GoRouter(
+      navigatorKey: navigatorKey,
+      initialLocation: getInitialLocation(isNotFirstLogin, token),
       routes: [
         GoRoute(
-          path: 'details/:id',
-          name: 'productDetails',
-          builder: (context, state) {
-            final id = int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
-            return ProductDetailsScreen(productId: id);
-          },
+          path: OnboardingRoutes.routeName,
+          builder: (context, state) => const OnboardingScreen(),
+        ),
+        GoRoute(
+          path: ProductRoutes.routeName,
+          builder: (context, state) => const ProductListScreen(),
+          routes: [
+            GoRoute(
+              path: 'details/:id',
+              name: ProductDetailsRoutes.routeName,
+              builder: (context, state) {
+                final id = int.tryParse(state.pathParameters['id'] ?? '') ?? 0;
+                return ProductDetailsScreen(productId: id);
+              },
+            ),
+          ],
         ),
       ],
-    ),
-  ],
-);
+    );
+
+    return _router!;
+  }
+
+  static String getInitialLocation(bool isNotFirstLogin, String token) {
+    debugPrint('isNotFirstLogin: $isNotFirstLogin, token: ${token.isNotEmpty}');
+    if (!isNotFirstLogin) {
+      return OnboardingRoutes.routeName;
+    } else if (token.isNotEmpty) {
+      return ProductRoutes.routeName;
+    } else {
+      return OnboardingRoutes.routeName;
+    }
+  }
+}
+
+extension OnboardingRoutes on OnboardingScreen {
+  static const routeName = '/onboarding';
+}
+
+extension ProductRoutes on ProductListScreen {
+  static const routeName = '/products';
+}
+
+extension ProductDetailsRoutes on ProductDetailsScreen {
+  static const routeName = 'productDetails';
+}
+

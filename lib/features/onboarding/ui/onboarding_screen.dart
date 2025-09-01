@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../l10n/app_localizations.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  static const String routeName = '/onboarding';
+
   const OnboardingScreen({super.key});
 
   @override
@@ -14,6 +16,11 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _page = PageController();
   int _index = 0;
+
+  final List<Widget> _pages = const [
+    _Page(title: 'Welcome', content: 'Browse our great products.'),
+    _Page(title: 'Fast & Simple', content: 'Tap a product to see details.'),
+  ];
 
   Future<void> _finishOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
@@ -39,42 +46,33 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: PageView(
               controller: _page,
               onPageChanged: (i) => setState(() => _index = i),
-              children: const [
-                _Page(title: 'Welcome', content: 'Browse our great products.'),
-                _Page(
-                  title: 'Fast & Simple',
-                  content: 'Tap a product to see details.',
-                ),
-              ],
+              children: _pages,
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: SizedBox(
-              width: 350,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('${_index + 1}/2'),
-                  FilledButton(
-                    onPressed: () {
-                      if (_index == 1) {
-                        _finishOnboarding();
-                      } else {
-                        _page.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeOut,
-                        );
-                      }
-                    },
-                    child: Text(
-                      _index == 1
-                          ? AppLocalizations.of(context)!.getStarted
-                          : AppLocalizations.of(context)!.next,
-                    ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('${_index + 1}/${_pages.length}'),
+                FilledButton(
+                  onPressed: () {
+                    if (_index == _pages.length - 1) {
+                      _finishOnboarding();
+                    } else {
+                      _page.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                    }
+                  },
+                  child: Text(
+                    _index == _pages.length - 1
+                        ? AppLocalizations.of(context)!.getStarted
+                        : AppLocalizations.of(context)!.next,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
