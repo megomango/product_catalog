@@ -19,8 +19,20 @@ A Flutter application for managing and displaying a catalog of products. This ap
 - Dart SDK
 
 ### Installation
+# Product Catalog App
+
+This app uses **flutter_native_splash** to generate the native splash screen.
+
+## 🚀 How to run the project
 
 1. Clone the repository:
-
    ```bash
-   git clone https://github.com/megomango/product_catalog.git
+   git clone https://github.com/username/product_catalog.git
+   cd product_catalog
+2. Install dependencies:
+   flutter pub get
+3. Generate the native splash screen (required if missing):
+   dart run flutter_native_splash:create --path=flutter_native_splash.yaml
+4. Run the app:
+   flutter run
+        
